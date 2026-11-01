@@ -1,0 +1,9 @@
+{
+    "interval_hours": 2.0,
+    "auto_close_seconds": 15,
+    "mode": "sequential",
+    "last_index": 0,
+    "messages": [
+        "get back to work"
+    ]
+}

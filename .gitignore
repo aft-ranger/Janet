@@ -1,0 +1,14 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python cache & runtime state
+__pycache__/
+*.pyc
+*.pid
+
+# Editor settings
+.vscode/
+
+# Old prototype archive (kept locally, excluded from repo)
+oldtimes/
