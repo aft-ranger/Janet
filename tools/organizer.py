@@ -126,7 +126,6 @@ def manage_organizer(action: str = "") -> str:
         )
         return f"Sorted existing files in: {target_dir}"
 
-    # If the user passed a direct folder path (e.g., `auto sort D:\MyFolder`), sort that directory once
     target_dir = _resolve_target_dir(action)
     if target_dir is not None:
         flags = subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0

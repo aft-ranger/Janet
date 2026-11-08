@@ -1,9 +1,12 @@
 {
-    "interval_hours": 2.0,
+    "interval_hours": 0.25,
     "auto_close_seconds": 15,
     "mode": "sequential",
-    "last_index": 0,
+    "last_index": 1,
     "messages": [
-        "get back to work"
+        "get back to work",
+        "i want you to be disturbed with inaction",
+        "226175",
+        "232191"
     ]
 }

@@ -1,10 +1,4 @@
-
-
-
-
-def tool_description(tool=""):
-    if tool == "":
-        tool = input("Janet: Please enter a tool name: ").strip()
+def tool_description():
     from tools.registry import register
     """
     Returns a dictionary of all registered tools with their descriptions and parameters.

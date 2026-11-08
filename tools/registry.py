@@ -1,11 +1,10 @@
 from unicodedata import name
 
 from tools.gettool import get_tool
-from tools.hello import hello
+#from tools.hello import hello
 from tools.calculator import calculate
 from tools.filesystem import list_files
-from tools.terminal import order
-from tools.goodbye import goodbye
+#from tools.goodbye import goodbye
 from tools.tooldescription import tool_description
 from tools.notifier import manage_notifier
 from tools.sticky import manage_sticky
@@ -122,6 +121,19 @@ class tool_registry:
         
     def get_all_descriptions(self):
         return {name: info["description"] for name, info in self._tools.items()}
+
+    def get_ollama_tools(self):
+         ollama_tools = []
+         for name, info in self._tools.items():
+             ollama_tools.append({
+                "type" : "function",
+                "function" : {
+                    "name": name,
+                    "description": info["description"],
+                    "parameters": info["parameters"]
+             }})
+         return ollama_tools
+         
                     
 
 registry = tool_registry()
@@ -142,7 +154,7 @@ registry.register_tool(
     }
 )
 
-registry.register_tool(
+'''registry.register_tool(
     name="hello",
     function=hello,
     description="Greet the user",
@@ -151,10 +163,10 @@ registry.register_tool(
         "properties": {},
         "required": []
     }
-)
+)'''
 
 registry.register_tool(
-    name="list files",
+    name="list_files",
     function=list_files,
     description="List files in a directory",
     parameters={
@@ -169,8 +181,8 @@ registry.register_tool(
     }
 )   
 
-registry.register_tool(
-    name="run command",
+'''registry.register_tool(
+    name="run_command",
     function=order,
     description="Run a terminal command",
     parameters={
@@ -183,9 +195,9 @@ registry.register_tool(
         },
         "required": ["command"]
     }
-)   
+)'''
 
-registry.register_tool(
+'''registry.register_tool(
     name="exit",
     function=goodbye,
     description="Exit the program",
@@ -194,10 +206,10 @@ registry.register_tool(
         "properties": {},
         "required": []
     }
-)
+)'''
 
 registry.register_tool(
-    name="get tool",
+    name="get_tool",
     function=get_tool,
     description="Get the description of a specific tool",
     parameters={
@@ -213,7 +225,7 @@ registry.register_tool(
 )
 
 registry.register_tool(
-    name="get tools description",
+    name="get_tools_description",
     function=tool_description,
     description="Get the descriptions of all available tools",
     parameters={
@@ -245,7 +257,7 @@ registry.register_tool(
 )
 
 registry.register_tool(
-    name="sticky notes",
+    name="sticky_notes",
     function=manage_sticky,
     description="Open or manage Sticky Notes (open, read, add <text>, clear)",
     parameters={
@@ -261,7 +273,7 @@ registry.register_tool(
 )
 
 registry.register_tool(
-    name="auto sort",
+    name="auto_sort",
     function=manage_organizer,
     description="Sort files in Downloads (default) or a custom directory (start [path], stop, status, once [path], or <path>)",
     parameters={

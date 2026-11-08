@@ -1,3 +1,28 @@
+import ast
+
+ALLOWED_NODES = (
+    ast.Expression,
+    ast.BinOp,
+    ast.UnaryOp,
+    ast.Constant,
+    ast.Add,
+    ast.Sub,
+    ast.Mult,
+    ast.Div,
+    ast.FloorDiv,
+    ast.Mod,
+    ast.Pow,
+    ast.UAdd,
+    ast.USub,
+)
+
+
+def _validate_ast(tree: ast.AST) -> None:
+    for node in ast.walk(tree):
+        if not isinstance(node, ALLOWED_NODES):
+            raise ValueError(f"Unsafe or unsupported syntax: {type(node).__name__}")
+        if isinstance(node, ast.Constant) and not isinstance(node.value, (int, float)):
+            raise ValueError("Only numeric values (int/float) are allowed.")
 
 
 def calculate(equation=""):
@@ -12,36 +37,13 @@ def calculate(equation=""):
                     return
         
         cleanEquation = equation.replace(" ", "")
-        parse = list(cleanEquation)
+        #parse = list(cleanEquation)
 
-        if len(parse) < 3:
-            print(
-                "Janet: Invalid equation format. Please try again"
-            )
-            return
+        tree = ast.parse(cleanEquation, mode='eval')
+        _validate_ast(tree)
+        result = eval(compile(tree, filename="<ast>", mode="eval"), {"__builtins__": {}})
 
-        i = 0
-        while i < len(parse):
-            char = parse[i]
-            
-            if char.isdigit() or char == ".":
-                i += 1
-                continue
-            
-            if char == "-" and i == 0:
-                i += 1
-                continue
-            
-            break
-        else:
-            print("No operator found")
-            return   
-
-        num1 = "".join(parse[0:i])
-        operator = parse[i]
-        num2 = "".join(parse[i+1:])
-
-        x = float(num1)
+        '''x = float(num1)
         y = float(num2)
 
         if operator == "+":
@@ -59,14 +61,19 @@ def calculate(equation=""):
             result = x%y
         else:
             print(
-                f"Janet: Unsupported operator '{operator}'. Please use +, -, *, or /."
+                f"Janet: Unsupported operator '{operator}'. Please use +, -, *, / or %."
             )
-            return
+            return'''
 
-    except ValueError:
-        print("Janet: Invalid input. Please enter numerical values.")
+    except ZeroDivisionError:
+        print("Janet: Error! Division by zero.")
+        return
+    except (ValueError, SyntaxError):
+        print("Janet: Invalid or unsafe expression. Only mathematical calculations are allowed.")
         return
 
     return result
 
+
+# multi expression calculator
 

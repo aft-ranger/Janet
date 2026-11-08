@@ -9,6 +9,10 @@ __pycache__/
 
 # Editor settings
 .vscode/
+personal.py/
+Python Projects/Auto Notifier/config.json
+tryout.py/
 
 # Old prototype archive (kept locally, excluded from repo)
 oldtimes/
+summary.md
